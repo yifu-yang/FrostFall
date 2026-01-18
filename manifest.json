@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "FrostFall",
+  "version": "1.0",
+  "description": "One-click tool to combine multiple Tweet photos into one continuous image.",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://x.com/*",
+    "https://pbs.twimg.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://x.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

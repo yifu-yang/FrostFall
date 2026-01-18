@@ -1,0 +1,31 @@
+.tic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9999px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    margin-left: 8px; /* Adjust spacing */
+}
+
+.tic-btn:hover {
+    background-color: rgba(29, 155, 240, 0.1);
+}
+
+.tic-btn svg {
+    color: rgb(83, 100, 113); /* Twitter gray */
+    fill: currentColor;
+    width: 20px;
+    height: 20px;
+}
+
+.tic-btn:hover svg {
+    color: rgb(29, 155, 240); /* Twitter blue */
+}
+
+.tic-loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
