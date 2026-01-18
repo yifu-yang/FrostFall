@@ -139,12 +139,20 @@ function showPreviewModal(blob) {
     const downloadBtn = overlay.querySelector('.tic-btn-download');
     const img = overlay.querySelector('.tic-modal-image');
 
+    // Close on Escape key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            closeModal(overlay, url, escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+
     // Close on X
-    closeBtn.onclick = () => closeModal(overlay, url);
+    closeBtn.onclick = () => closeModal(overlay, url, escHandler);
 
     // Close on clicking background (but not image/content)
     overlay.onclick = (e) => {
-        if (e.target === overlay) closeModal(overlay, url);
+        if (e.target === overlay) closeModal(overlay, url, escHandler);
     };
 
     // Download Handler
@@ -158,27 +166,24 @@ function showPreviewModal(blob) {
         document.body.removeChild(a);
     };
 
-    // Close on Escape key
-    const escHandler = (e) => {
-        if (e.key === 'Escape') closeModal(overlay, url);
-    };
-    document.addEventListener('keydown', escHandler);
-    overlay.dataset.escHandler = escHandler; // Store for cleanup
-
     document.body.appendChild(overlay);
 }
 
-function closeModal(overlay, url) {
-    // Cleanup URL object
-    URL.revokeObjectURL(url);
-
+function closeModal(overlay, url, escHandler) {
     // Remove Esc listener
-    if (overlay.dataset.escHandler) {
-        document.removeEventListener('keydown', overlay.dataset.escHandler);
+    if (escHandler) {
+        document.removeEventListener('keydown', escHandler);
     }
 
     // Remove DOM
-    overlay.remove();
+    if (overlay && overlay.parentNode) {
+        overlay.parentNode.removeChild(overlay);
+    }
+
+    // Cleanup URL object after a short delay to ensure any pending downloads/renders are done
+    // Or just revoke it. Chrome sometimes crashes if revoked synchronously during a download click?
+    // Let's revoke it immediately as standard, but if crash persists, maybe defer
+    setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
 function getTweetImages(article) {
