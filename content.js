@@ -99,17 +99,9 @@ async function handleCombine(e, article) {
             currentY += bmp.height;
         });
 
-        // Download
+        // Show Preview instead of auto-download
         canvas.toBlob((blob) => {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            a.download = `tweet-combined-${timestamp}.png`;
-            a.href = url;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            showPreviewModal(blob);
         }, 'image/png');
 
     } catch (err) {
@@ -119,6 +111,74 @@ async function handleCombine(e, article) {
         btn.classList.remove('tic-loading');
         btn.innerHTML = originalContent;
     }
+}
+
+function showPreviewModal(blob) {
+    const url = URL.createObjectURL(blob);
+
+    // Create Overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'tic-modal-overlay';
+
+    // HTML Structure
+    overlay.innerHTML = `
+        <div class="tic-modal-content">
+            <button class="tic-modal-close" aria-label="Close">×</button>
+            <img src="${url}" class="tic-modal-image" alt="Combined Image">
+            <div class="tic-modal-actions">
+                <button class="tic-btn-download">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 16v-2l-8-5-8 5v2h16zm2-8H1v11c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8zm-2 11H3v-2l8-5 8 5v2zM5 8h14V6H5v2z"></path></svg>
+                    Download Image
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Event Listeners
+    const closeBtn = overlay.querySelector('.tic-modal-close');
+    const downloadBtn = overlay.querySelector('.tic-btn-download');
+    const img = overlay.querySelector('.tic-modal-image');
+
+    // Close on X
+    closeBtn.onclick = () => closeModal(overlay, url);
+
+    // Close on clicking background (but not image/content)
+    overlay.onclick = (e) => {
+        if (e.target === overlay) closeModal(overlay, url);
+    };
+
+    // Download Handler
+    downloadBtn.onclick = () => {
+        const a = document.createElement('a');
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        a.download = `frostfall-${timestamp}.png`;
+        a.href = url;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
+    // Close on Escape key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') closeModal(overlay, url);
+    };
+    document.addEventListener('keydown', escHandler);
+    overlay.dataset.escHandler = escHandler; // Store for cleanup
+
+    document.body.appendChild(overlay);
+}
+
+function closeModal(overlay, url) {
+    // Cleanup URL object
+    URL.revokeObjectURL(url);
+
+    // Remove Esc listener
+    if (overlay.dataset.escHandler) {
+        document.removeEventListener('keydown', overlay.dataset.escHandler);
+    }
+
+    // Remove DOM
+    overlay.remove();
 }
 
 function getTweetImages(article) {

@@ -7,7 +7,7 @@
     border-radius: 9999px;
     transition-duration: 0.2s;
     cursor: pointer;
-    margin-left: 8px; /* Adjust spacing */
+    margin-left: 8px;
 }
 
 .tic-btn:hover {
@@ -15,17 +15,100 @@
 }
 
 .tic-btn svg {
-    color: rgb(83, 100, 113); /* Twitter gray */
+    color: rgb(83, 100, 113);
     fill: currentColor;
     width: 20px;
     height: 20px;
 }
 
 .tic-btn:hover svg {
-    color: rgb(29, 155, 240); /* Twitter blue */
+    color: rgb(29, 155, 240);
 }
 
 .tic-loading {
     opacity: 0.5;
     pointer-events: none;
+}
+
+/* Modal Overlay */
+.tic-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: tic-fade-in 0.2s forwards;
+}
+
+@keyframes tic-fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal Content Container */
+.tic-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* The Combined Image */
+.tic-modal-image {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+/* Close Button (Top Right) */
+.tic-modal-close {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px;
+    line-height: 1;
+}
+
+.tic-modal-close:hover {
+    color: #1d9bf0;
+}
+
+/* Action Bar (Download Button) */
+.tic-modal-actions {
+    margin-top: 15px;
+}
+
+.tic-btn-download {
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tic-btn-download:hover {
+    background-color: #1a8cd8;
 }
