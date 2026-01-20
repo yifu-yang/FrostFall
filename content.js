@@ -46,10 +46,12 @@ function createBtn() {
     div.setAttribute('aria-label', 'Combine Images');
     div.setAttribute('title', 'Combine Images');
 
-    // Icon: Stacked images style
+    // Icon: Snowflake style (FrostFall theme)
     div.innerHTML = `
     <svg viewBox="0 0 24 24" aria-hidden="true" class="r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-18jsvk2">
-        <g><path d="M21 16v-2l-8-5-8 5v2h16zm2-8H1v11c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8zm-2 11H3v-2l8-5 8 5v2zM5 8h14V6H5v2z"></path></g>
+        <g>
+            <path d="M21 11h-3.64l1.88-2.61c.45-.63.3-1.51-.33-1.96-.63-.45-1.51-.3-1.96.33L15.2 9.2V6c0-.77-.63-1.4-1.4-1.4-.77 0-1.4.63-1.4 1.4v3.2l-1.75-2.43c-.45-.63-1.33-.78-1.96-.33-.63.45-.78 1.33-.33 1.96L10.24 11H6.6c-.77 0-1.4.63-1.4 1.4 0 .77.63 1.4 1.4 1.4h3.64l-1.88 2.61c-.45.63-.3 1.51.33 1.96.26.19.56.28.85.28.43 0 .86-.2 1.11-.56l1.75-2.43V19c0 .77.63 1.4 1.4 1.4.77 0 1.4-.63 1.4-1.4v-3.2l1.75 2.43c.25.35.68.56 1.11.56.29 0 .59-.09.85-.28.63-.45.78-1.33.33-1.96L17.36 14H21c.77 0 1.4-.63 1.4-1.4 0-.77-.63-1.4-1.4-1.4z"></path>
+        </g>
     </svg>
     `;
     return div;
